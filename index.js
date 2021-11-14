@@ -40,7 +40,7 @@ async function run()
         {
             const email = req.query.email;
             const query = { email: email }
-            const cursor = reviewCollection.find(query);
+            const cursor = purchaseCollection.find(query);
             const purchase = await cursor.toArray();
             res.json(purchase);
         });
@@ -68,7 +68,7 @@ async function run()
 
         app.get('/users', async (req, res) =>
         {
-            const cursor = userCollection.find({});git
+            const cursor = userCollection.find({});
             const users = await cursor.toArray();
             res.send(users);
         });
