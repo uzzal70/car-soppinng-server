@@ -26,6 +26,7 @@ async function run()
         const purchaseCollection = database.collection('purchase');
         const productsCollection = database.collection('products'); //service database ar collection name 
         const userCollection = database.collection('users');
+        const reviewCollection = database.collection('review');
         //GET API
         app.get('/products', async (req, res) =>
         {
@@ -39,14 +40,35 @@ async function run()
         {
             const email = req.query.email;
             const query = { email: email }
-            const cursor = purchaseCollection.find(query);
+            const cursor = reviewCollection.find(query);
             const purchase = await cursor.toArray();
             res.json(purchase);
         });
 
+        // Review  start
+        app.get('/review', async (req, res) =>
+        {
+            const email = req.query.email;
+            const query = { email: email }
+            const cursor = reviewCollection.find(query);
+            const review = await cursor.toArray();
+            res.json(review);
+        });
+
+        app.post('/review', async (req, res) =>
+        {
+            const review = req.body;
+            // AutoExpress name akta database create kore data pathi dibe 
+            const result = await reviewCollection.insertOne(review);
+            console.log(result);
+            res.json(result);
+        });
+
+        //review end
+
         app.get('/users', async (req, res) =>
         {
-            const cursor = userCollection.find({});
+            const cursor = userCollection.find({});git
             const users = await cursor.toArray();
             res.send(users);
         });
